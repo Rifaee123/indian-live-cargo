@@ -20,6 +20,7 @@ class AndroidLargeElevenScreen extends GetWidget<AndroidLargeElevenController> {
 
   @override
   Widget build(BuildContext context) {
+    String selectedValue = 'Value 1';
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -55,11 +56,35 @@ class AndroidLargeElevenScreen extends GetWidget<AndroidLargeElevenController> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    CustomTextFormField(
-                                      controller: controller.editTextController,
-                                      borderDecoration:
-                                          TextFormFieldStyleHelper.fillBlueGray,
-                                      fillColor: appTheme.blueGray100,
+                                    Container(
+                                      width: 320.h,
+                                      height: 50.v,
+                                      decoration: BoxDecoration(
+                                          color: appTheme.blueGray100,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.h))),
+                                      child: Center(
+                                        child: DropdownButton<String>(
+                                          dropdownColor: Colors.black,
+                                          value: selectedValue,
+                                          onChanged: (String? newValue) {
+                                            selectedValue = newValue!;
+                                          },
+                                          items: <String>[
+                                            'Value 1',
+                                            'Value 2',
+                                            'Value 3',
+                                            'Value 4',
+                                            'Value 5'
+                                          ].map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(height: 32.v),
                                     CustomTextFormField(
@@ -107,17 +132,23 @@ class AndroidLargeElevenScreen extends GetWidget<AndroidLargeElevenController> {
                                                       ),
                                                       child: Column(
                                                         children: [
-                                                          Container(
-                                                            height: 60.v,
-                                                            width: 67.h,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: appTheme
-                                                                  .blueGray100,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                10.h,
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .openCamera();
+                                                            },
+                                                            child: Container(
+                                                              height: 60.v,
+                                                              width: 67.h,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: appTheme
+                                                                    .blueGray100,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  10.h,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -136,17 +167,23 @@ class AndroidLargeElevenScreen extends GetWidget<AndroidLargeElevenController> {
                                                           EdgeInsets.only(),
                                                       child: Column(
                                                         children: [
-                                                          Container(
-                                                            height: 60.v,
-                                                            width: 69.h,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: appTheme
-                                                                  .blueGray100,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                10.h,
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .openGallery();
+                                                            },
+                                                            child: Container(
+                                                              height: 60.v,
+                                                              width: 69.h,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: appTheme
+                                                                    .blueGray100,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  10.h,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -283,7 +320,7 @@ class AndroidLargeElevenScreen extends GetWidget<AndroidLargeElevenController> {
                 InkWell(
                   onTap: () {
                     Get.offNamed(
-                      AppRoutes.androidLargeTenScreen ,
+                      AppRoutes.androidLargeTenScreen,
                     );
                   },
                   child: CustomImageView(
