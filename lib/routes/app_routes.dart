@@ -1,15 +1,14 @@
-
 import 'package:get/get.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_eight_screen/android_large_eight_screen.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_eight_screen/binding/android_large_eight_binding.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_eleven_screen/android_large_eleven_screen.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_eleven_screen/binding/android_large_eleven_binding.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_nine_screen/android_large_nine_screen.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_nine_screen/binding/android_large_nine_binding.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_ten_screen/android_large_ten_screen.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_ten_screen/binding/android_large_ten_binding.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_twelve_screen/android_large_twelve_screen.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/android_large_twelve_screen/binding/android_large_twelve_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/login_screen/login_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/login_screen/binding/login_screen_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/cargo_deatails_screen/cargo_deatails_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/cargo_deatails_screen/binding/cargo_deatails_screen_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_tripsheet_screen/all_tripsheet_screen_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_tripsheet_screen/binding/all_tripsheet_screen_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/all_cargo_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/binding/all_cargo_screen_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/splash_screen/splash_screen_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/splash_screen/binding/splash_screen_binding.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 
@@ -31,51 +30,51 @@ class AppRoutes {
   static List<GetPage> pages = [
     GetPage(
       name: androidLargeTwelveScreen,
-      page: () => AndroidLargeTwelveScreen(),
+      page: () => const SplashScreen(),
       bindings: [
-        AndroidLargeTwelveBinding(),
+        SplashScreenBinding(),
       ],
     ),
     GetPage(
       name: androidLargeEightScreen,
-      page: () => AndroidLargeEightScreen(),
+      page: () => LoginScreen(),
       bindings: [
-        AndroidLargeEightBinding(),
+        LoginScreenBinding(),
       ],
     ),
     GetPage(
       name: androidLargeNineScreen,
-      page: () => AndroidLargeNineScreen(),
+      page: () => const AllTripsheetScreen(),
       bindings: [
-        AndroidLargeNineBinding(),
+        AllTripsheetScreenBinding(),
       ],
     ),
     GetPage(
       name: androidLargeTenScreen,
-      page: () => AndroidLargeTenScreen(),
+      page: () => const AllCargoScreenScreen(),
       bindings: [
-        AndroidLargeTenBinding(),
+        AllCargoScreenBinding(),
       ],
     ),
     GetPage(
       name: androidLargeElevenScreen,
-      page: () => AndroidLargeElevenScreen(),
+      page: () => const CargoDeatailsScreen(),
       bindings: [
-        AndroidLargeElevenBinding(),
+        CargoDeatailsScreenBinding(),
       ],
     ),
     GetPage(
       name: appNavigationScreen,
-      page: () => AppNavigationScreen(),
+      page: () => const AppNavigationScreen(),
       bindings: [
         AppNavigationBinding(),
       ],
     ),
     GetPage(
       name: initialRoute,
-      page: () => AndroidLargeTwelveScreen(),
+      page: () => const SplashScreen(),
       bindings: [
-        AndroidLargeTwelveBinding(),
+        SplashScreenBinding(),
       ],
     )
   ];
