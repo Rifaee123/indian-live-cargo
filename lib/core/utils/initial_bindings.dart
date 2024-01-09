@@ -1,4 +1,3 @@
-
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/network/network_info.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/pref_utils.dart';

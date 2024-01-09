@@ -8,9 +8,7 @@ import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
 import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/custom_image_view.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/custom_text_form_field.dart';
-
 import '../../widgets/custom_elevated_button.dart';
-
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
@@ -27,23 +25,27 @@ class LoginScreen extends GetWidget<LoginScreenController> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Form(
-          key: _formKey,
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(horizontal: 19.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 26.v),
-                CustomImageView(
-                  imagePath: ImageConstant.imgCargologo11,
-                  height: 136.v,
-                  width: 201.h,
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Center(
+              child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.symmetric(horizontal: 19.h),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 26.v),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgCargologo11,
+                      height: 136.v,
+                      width: 201.h,
+                    ),
+                    SizedBox(height: 78.v),
+                    _buildLoginSection(),
+                  ],
                 ),
-                SizedBox(height: 78.v),
-                _buildLoginSection(),
-              ],
+              ),
             ),
           ),
         ),
@@ -77,6 +79,7 @@ class LoginScreen extends GetWidget<LoginScreenController> {
           ),
           SizedBox(height: 28.v),
           CustomTextFormField(
+            autofocus: false,
             controller: controller.userNameController,
             hintText: "lbl_enter_user_name".tr,
             validator: (value) {
@@ -88,6 +91,7 @@ class LoginScreen extends GetWidget<LoginScreenController> {
           ),
           SizedBox(height: 36.v),
           CustomTextFormField(
+            autofocus: false,
             controller: controller.passwordController,
             hintText: "lbl_enter_password".tr,
             textInputAction: TextInputAction.done,

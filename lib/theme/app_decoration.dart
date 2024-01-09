@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 
-
 class AppDecoration {
   // Fill decorations
   static BoxDecoration get fillBlue => BoxDecoration(

@@ -28,19 +28,21 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cached_network_image: ^3.3.0
-  connectivity_plus: ^5.0.2
-  cupertino_icons: ^1.0.2
+  build_runner: ^2.4.7
+  cached_network_image: null
+  connectivity_plus: null
+  cupertino_icons: null
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.9
-  get: ^4.6.6
-  http: 
-  image_picker: ^1.0.6
-  intl: ^0.19.0
-  json_annotation: ^4.8.1
-  json_serializable: ^6.7.1
-  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+  flutter_svg: null
+  get: null
+  http: null
+  image_picker: null
+  intl: null
+  json_annotation: null
+  json_serializable: null
+  shared_preferences: null
 
 dev_dependencies:
   flutter_lints: ^2.0.0

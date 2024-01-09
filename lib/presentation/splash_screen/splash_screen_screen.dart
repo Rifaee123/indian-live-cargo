@@ -6,7 +6,6 @@ import 'package:indian_live_cargo_mobileapp/widgets/custom_image_view.dart';
 import 'controller/splash_screen_controller.dart';
 import 'package:flutter/material.dart';
 
-
 class SplashScreen extends GetWidget<SplashScreenController> {
   const SplashScreen({Key? key}) : super(key: key);
 

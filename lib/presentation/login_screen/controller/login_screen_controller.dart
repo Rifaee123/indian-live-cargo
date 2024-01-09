@@ -9,7 +9,6 @@ import 'package:indian_live_cargo_mobileapp/presentation/login_screen/models/log
 /// This class manages the state of the AndroidLargeEightScreen, including the
 /// current androidLargeEightModelObj
 class LoginScreenController extends GetxController {
-  
   final AuthController loginController = Get.put(AuthController());
   TextEditingController userNameController = TextEditingController();
 

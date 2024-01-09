@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 
-
 // ignore: must_be_immutable
 class AppbarTitle extends StatelessWidget {
   AppbarTitle({

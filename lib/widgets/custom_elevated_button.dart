@@ -3,7 +3,6 @@ import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 import 'package:indian_live_cargo_mobileapp/theme/custom_text_style.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/base_button.dart';
 
-
 class CustomElevatedButton extends BaseButton {
   CustomElevatedButton({
     Key? key,

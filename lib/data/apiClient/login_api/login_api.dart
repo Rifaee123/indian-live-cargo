@@ -1,10 +1,11 @@
 // auth_controller.dart
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/login_model/login_model.dart';
+import 'package:indian_live_cargo_mobileapp/data/secure_storage.dart/secure_storage.dart';
 
 class AuthController extends GetxController {
   final String baseUrl = 'https://api.indianlivecargo.com/api/v1';
@@ -23,9 +24,14 @@ class AuthController extends GetxController {
       final response = await http.post(url, body: body);
 
       if (response.statusCode == 200) {
+        log(response.body.toString());
+
         final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
         user.value = UserModel.fromJson(jsonResponse['data']);
-        print(user.value!.apiToken.toString());
+        final StorageItem newItem =
+            StorageItem('AuthToken', user.value!.apiToken);
+        StorageService.instance.writeSecureData(newItem);
+        log(user.value!.apiToken.toString());
         Get.snackbar('Success', 'Login Successfully',
             backgroundColor: Color.fromARGB(102, 76, 175, 79));
       } else {

@@ -8,7 +8,6 @@ import '../controller/all_cargo_screen_controller.dart';
 import '../models/thirteenlist_item_model.dart';
 import 'package:flutter/material.dart';
 
-
 // ignore: must_be_immutable
 class ThirteenlistItemWidget extends StatelessWidget {
   ThirteenlistItemWidget(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 
-
 // ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({

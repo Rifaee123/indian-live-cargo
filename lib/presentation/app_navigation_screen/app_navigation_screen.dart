@@ -4,7 +4,6 @@ import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'controller/app_navigation_controller.dart';
 import 'package:flutter/material.dart';
 
-
 // ignore_for_file: must_be_immutable
 class AppNavigationScreen extends GetWidget<AppNavigationController> {
   const AppNavigationScreen({Key? key})
