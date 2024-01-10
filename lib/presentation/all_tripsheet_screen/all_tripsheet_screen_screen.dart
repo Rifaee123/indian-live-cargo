@@ -2,6 +2,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/all_cargo_screen.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
 import 'package:indian_live_cargo_mobileapp/theme/custom_text_style.dart';
@@ -53,9 +54,22 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
           fit: BoxFit.cover,
         ),
       ),
-      child: Text(
-        "lbl_ilcdelhi".tr,
-        style: CustomTextStyles.headlineSmallWhiteA700,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "lbl_ilcdelhi".tr,
+            style: CustomTextStyles.headlineSmallWhiteA700,
+          ),
+          IconButton(
+              onPressed: () {
+                controller.Logout();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
       ),
     );
   }
@@ -86,9 +100,16 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.offNamed(
-                              AppRoutes.androidLargeTenScreen,
-                            );
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AllCargoScreenScreen(
+                                  tripNum: controller.tripSheetController
+                                      .tripSheetList[index].tripNumber),
+                            ));
+                            // Get.offNamed(
+                            //   AppRoutes.androidLargeTenScreen,
+                            //   arguments: controller.tripSheetController
+                            //       .tripSheetList[index].tripNumber,
+                            // );
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 5.h),

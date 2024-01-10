@@ -107,18 +107,20 @@ class LoginScreen extends GetWidget<LoginScreenController> {
           ),
           SizedBox(height: 40.v),
           CustomElevatedButton(
-            onPressed: () {
+            onPressed: () async{
               if (controller.userNameController.text.isNotEmpty &&
                   controller.passwordController.text.isNotEmpty) {
-                controller
+              await  controller
                     .login(controller.userNameController.text.trim(),
                         controller.passwordController.text.trim())
-                    .then((value) => controller
-                            .loginController.user.value!.apiToken.isNotEmpty
-                        ? Get.offNamed(
-                            AppRoutes.androidLargeNineScreen,
-                          )
-                        : null);
+                    .then((value) {
+                  if (controller
+                      .loginController.user.value!=null) {
+                    Get.offNamed(
+                      AppRoutes.androidLargeNineScreen,
+                    );
+                  }
+                });
               } else {
                 Get.snackbar('Enter Something', 'Data Not enterd');
               }

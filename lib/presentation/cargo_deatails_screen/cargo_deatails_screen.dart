@@ -1,6 +1,7 @@
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
+import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
 import 'package:indian_live_cargo_mobileapp/theme/custom_text_style.dart';
@@ -12,15 +13,38 @@ import 'controller/cargo_deatails_screen_controller.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
-class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
-  const CargoDeatailsScreen({Key? key})
-      : super(
-          key: key,
-        );
+class CargoDeatailsScreen extends StatefulWidget {
+  CargoDeatailsScreen(this.cargodata, {super.key});
+
+  CargoData cargodata;
+
+  @override
+  State<CargoDeatailsScreen> createState() => _CargoDeatailsScreenState();
+}
+
+class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
+  CargoDeatailsScreenController controller =
+      Get.put(CargoDeatailsScreenController());
+  List<int> cargoIds = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cargoIds.add(widget.cargodata.id!);
+  }
 
   @override
   Widget build(BuildContext context) {
-    String selectedValue = 'Value 1';
+    Map<int, String> statusMap = {
+      0: 'On the way',
+      1: 'Out for Delivery',
+      2: 'In Transit',
+      3: 'Delivered',
+      4: 'Pending',
+      5: 'Not Delivered',
+      6: 'Recheck',
+    };
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -34,7 +58,7 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _buildRightArrowZipcode(),
+                      _buildRightArrowZipcode(widget.cargodata, context),
                       SizedBox(height: 25.v),
                       SizedBox(
                         width: double.maxFinite,
@@ -56,36 +80,38 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Container(
-                                      width: 320.h,
-                                      height: 50.v,
-                                      decoration: BoxDecoration(
-                                          color: appTheme.blueGray100,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15.h))),
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          dropdownColor: Colors.black,
-                                          value: selectedValue,
-                                          onChanged: (String? newValue) {
-                                            selectedValue = newValue!;
-                                          },
-                                          items: <String>[
-                                            'Value 1',
-                                            'Value 2',
-                                            'Value 3',
-                                            'Value 4',
-                                            'Value 5'
-                                          ].map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ),
-                                    ),
+                                    Obx(() => Container(
+                                          // width: 380.h,
+                                          height: 50.v,
+                                          decoration: BoxDecoration(
+                                              color: appTheme.blueGray100,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.h))),
+                                          child: Center(
+                                              child: DropdownButton<int>(
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600),
+                                            dropdownColor: Colors.white,
+                                            focusColor: Colors.black,
+                                            value:
+                                                controller.selectedValue.value,
+                                            onChanged: (int? newValue) {
+                                              if (newValue != null) {
+                                                controller.selectedValue.value =
+                                                    newValue;
+                                              }
+                                            },
+                                            items: statusMap.entries.map<
+                                                    DropdownMenuItem<int>>(
+                                                (MapEntry<int, String> entry) {
+                                              return DropdownMenuItem<int>(
+                                                value: entry.key,
+                                                child: Text(entry.value),
+                                              );
+                                            }).toList(),
+                                          )),
+                                        )),
                                     SizedBox(height: 32.v),
                                     CustomTextFormField(
                                       controller: controller.commentController,
@@ -213,6 +239,29 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
                                           theme.textTheme.bodyLarge!,
                                     ),
                                     SizedBox(height: 26.v),
+                                    CustomElevatedButton(
+                                      height: 36.v,
+                                      width: 148.h,
+                                      text: "Update",
+                                      buttonStyle: ButtonStyle(
+                                        textStyle:
+                                            MaterialStatePropertyAll(TextStyle(
+                                          color: Colors.white,
+                                        )),
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                appTheme.indigo800),
+                                      ),
+                                      onPressed: () {
+                                        controller.UpdatecargoStatuscontroller
+                                            .updateCargoStatus(
+                                                "2|AhjfNi38T0hkrw2f7UtDhdbyqBQAkKGhupbyEAoP47e54c1a",
+                                                cargoIds,
+                                                controller.selectedValue.value);
+                                      },
+                                      // buttonTextStyle:
+                                      //     theme.textTheme.bodyLarge!,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -305,7 +354,7 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
   }
 
   /// Section Widget
-  Widget _buildRightArrowZipcode() {
+  Widget _buildRightArrowZipcode(CargoData data, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 14.h),
       child: Row(
@@ -319,9 +368,7 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.offNamed(
-                      AppRoutes.androidLargeTenScreen,
-                    );
+                    Navigator.pop(context);
                   },
                   child: CustomImageView(
                     imagePath: ImageConstant.imgRightArrow,
@@ -331,7 +378,7 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
                 ),
                 SizedBox(height: 10.v),
                 Text(
-                  "lbl_163212".tr,
+                  widget.cargodata.invoiceNumber.toString(),
                   style: CustomTextStyles.titleLargeBold22,
                 ),
                 SizedBox(height: 12.v),
@@ -346,7 +393,8 @@ class CargoDeatailsScreen extends GetWidget<CargoDeatailsScreenController> {
                     SizedBox(
                       width: 212.h,
                       child: Text(
-                        "msg_sheeba_charumoodu".tr,
+                        widget.cargodata.address.toString(),
+                        // "msg_sheeba_charumoodu".tr
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: CustomTextStyles.titleMediumWhiteA700,

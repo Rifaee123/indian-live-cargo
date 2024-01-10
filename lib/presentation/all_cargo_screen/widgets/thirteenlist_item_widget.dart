@@ -1,60 +1,62 @@
-import 'package:get/get_core/src/get_main.dart';
-import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
-import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
 import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
 import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 
-import '../controller/all_cargo_screen_controller.dart';
-import '../models/thirteenlist_item_model.dart';
-import 'package:flutter/material.dart';
+class ThirteenlistItemWidget extends StatefulWidget {
+  final CargoData cargoData;
+  final Function(bool isSelected) onSelectionChanged;
 
-// ignore: must_be_immutable
-class ThirteenlistItemWidget extends StatelessWidget {
-  ThirteenlistItemWidget(
-    this.thirteenlistItemModelObj, {
+  ThirteenlistItemWidget({
+    required this.cargoData,
+    required this.onSelectionChanged,
     Key? key,
-  }) : super(
-          key: key,
-        );
+  }) : super(key: key);
 
-  ThirteenlistItemModel thirteenlistItemModelObj;
+  @override
+  _ThirteenlistItemWidgetState createState() => _ThirteenlistItemWidgetState();
+}
 
-  var controller = Get.find<AllCargoScreenController>();
+class _ThirteenlistItemWidgetState extends State<ThirteenlistItemWidget> {
+  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 22.h,
-        vertical: 17.v,
+        horizontal: 22.0,
+        vertical: 17.0,
       ),
       decoration: AppDecoration.fillBlue.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder10,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 1.v),
-            child: Obx(
-              () => Text(
-                thirteenlistItemModelObj.dynamicText!.value,
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
+          Checkbox(
+            value: isSelected,
+            onChanged: (value) {
+              setState(() {
+                isSelected = value!;
+                widget.onSelectionChanged(isSelected);
+              });
+            },
+          ),
+          Text(
+            widget.cargoData.invoiceNumber.toString(),
+            style: theme.textTheme.titleLarge,
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: 6.v,
-              right: 4.h,
-              bottom: 3.v,
+              top: 6.0,
+              right: 4.0,
+              bottom: 3.0,
             ),
-            child: Obx(
-              () => Text(
-                thirteenlistItemModelObj.dynamicText1!.value,
-                style: theme.textTheme.labelLarge,
-              ),
+            child: Text(
+              "Out For Delivery",
+              style: theme.textTheme.labelLarge,
             ),
           ),
         ],

@@ -49,20 +49,20 @@ class AppRoutes {
         AllTripsheetScreenBinding(),
       ],
     ),
-    GetPage(
-      name: androidLargeTenScreen,
-      page: () => const AllCargoScreenScreen(),
-      bindings: [
-        AllCargoScreenBinding(),
-      ],
-    ),
-    GetPage(
-      name: androidLargeElevenScreen,
-      page: () => const CargoDeatailsScreen(),
-      bindings: [
-        CargoDeatailsScreenBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: androidLargeTenScreen,
+    //   page: () => const AllCargoScreenScreen(),
+    //   bindings: [
+    //     AllCargoScreenBinding(),
+    //   ],
+    // ),
+    // GetPage(
+    //   name: androidLargeElevenScreen,
+    //   page: () =>  CargoDeatailsScreen(),
+    //   bindings: [
+    //     CargoDeatailsScreenBinding(),
+    //   ],
+    // ),
     GetPage(
       name: appNavigationScreen,
       page: () => const AppNavigationScreen(),
