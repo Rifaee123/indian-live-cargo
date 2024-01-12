@@ -1,13 +1,15 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/cargo_status_update_api/cargo_status_update_api.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/get_cargos_by_trip_no/get_cargos_by_trip_no.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/models/all_cargo_screen_model.dart';
-import 'package:indian_live_cargo_mobileapp/presentation/cargo_deatails_screen/controller/cargo_deatails_screen_controller.dart';
+
 
 /// A controller class for the AndroidLargeTenScreen.
 ///
@@ -26,6 +28,7 @@ class AllCargoScreenController extends GetxController {
   final arguments = Get.arguments;
   List<int> cargoIds = [];
   final RxList<CargoData> selectedCargoItems = <CargoData>[].obs;
+  Rx<XFile?> imagePath = Rx<XFile?>(null);
 
   void toggleSelection(CargoData cargoData) {
     if (selectedCargoItems.contains(cargoData) &&
@@ -38,6 +41,57 @@ class AllCargoScreenController extends GetxController {
     }
     log(selectedCargoItems.length.toString());
     log("cargo id:${cargoIds.length.toString()}");
+  }
+  Rx<CroppedFile?> cropedfile = Rx<CroppedFile?>(null);
+  Future<void> openCamera() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      imagePath.value = pickedImage;
+      // Use the picked file (e.g., upload or display the image)
+      print('Image from camera: ${imagePath.value!.path}');
+    }
+  }
+
+  Future<void> openGallery() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      imagePath.value = pickedImage;
+      // Use the picked file (e.g., upload or display the image)
+      print('Image from gallery: ${imagePath.value!.path}');
+    }
+  }
+
+  Future<void> cropImage() async {
+    if (imagePath.value != null) {
+      var croppedFile = await ImageCropper().cropImage(
+        sourcePath: imagePath.value!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        cropedfile.value = croppedFile;
+      }
+    }
+  }
+
+  void clear() {
+    imagePath.value = null;
+    cropedfile.value = null;
   }
 
   // @override

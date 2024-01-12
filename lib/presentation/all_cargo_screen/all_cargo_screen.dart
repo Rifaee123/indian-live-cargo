@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
@@ -52,94 +55,313 @@ class _AllCargoScreenScreenState extends State<AllCargoScreenScreen> {
     return SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(controller.selectedValue.value),
-            body: Padding(
-                padding: EdgeInsets.only(
-                  left: 16.h,
-                  top: 25.v,
-                  right: 16.h,
-                ),
-                child: Column(
-                  children: [
-                    Obx(() => Container(
-                          // width: 380.h,
-                          height: 50.v,
-                          decoration: BoxDecoration(
-                              color: appTheme.blueGray100,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.h))),
-                          child: Center(
-                              child: DropdownButton<int>(
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                            dropdownColor: Colors.white,
-                            focusColor: Colors.black,
-                            value: controller.selectedValue.value,
-                            onChanged: (int? newValue) {
-                              if (newValue != null) {
-                                controller.selectedValue.value = newValue;
-                              }
-                            },
-                            items: statusMap.entries.map<DropdownMenuItem<int>>(
-                                (MapEntry<int, String> entry) {
-                              return DropdownMenuItem<int>(
-                                value: entry.key,
-                                child: Text(entry.value),
-                              );
-                            }).toList(),
+            body: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.h,
+                    top: 25.v,
+                    right: 16.h,
+                  ),
+                  child: Column(
+                    children: [
+                      Obx(() => Container(
+                            // width: 380.h,
+                            height: 50.v,
+                            decoration: BoxDecoration(
+                                color: appTheme.blueGray100,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.h))),
+                            child: Center(
+                                child: DropdownButton<int>(
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                              dropdownColor: Colors.white,
+                              focusColor: Colors.black,
+                              value: controller.selectedValue.value,
+                              onChanged: (int? newValue) {
+                                if (newValue != null) {
+                                  controller.selectedValue.value = newValue;
+                                }
+                              },
+                              items: statusMap.entries
+                                  .map<DropdownMenuItem<int>>(
+                                      (MapEntry<int, String> entry) {
+                                return DropdownMenuItem<int>(
+                                  value: entry.key,
+                                  child: Text(entry.value),
+                                );
+                              }).toList(),
+                            )),
                           )),
-                        )),
-                    SizedBox(
-                      height: 15.v,
-                    ),
-                    Obx(
-                      () => GestureDetector(
-                        onLongPress: () {
-                          // Show the selection UI (e.g., checkboxes)
-                        },
-                        child: ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: 12.0,
-                            );
+                      SizedBox(
+                        height: 15.v,
+                      ),
+                      Obx(() =>
+                          controller.selectedValue == 3 ? _body() : SizedBox()),
+                      Obx(
+                        () => GestureDetector(
+                          onLongPress: () {
+                            // Show the selection UI (e.g., checkboxes)
                           },
-                          itemCount:
-                              controller.getcargocontroller.cargoList.length,
-                          itemBuilder: (context, index) {
-                            CargoData model =
-                                controller.getcargocontroller.cargoList[index];
+                          child: ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: 12.0,
+                              );
+                            },
+                            itemCount:
+                                controller.getcargocontroller.cargoList.length,
+                            itemBuilder: (context, index) {
+                              CargoData model = controller
+                                  .getcargocontroller.cargoList[index];
 
-                            return LongPressDraggable(
-                              data: model,
-                              feedback: ThirteenlistItemWidget(
-                                cargoData: model,
-                                onSelectionChanged: (isSelected) {
-                                  controller.toggleSelection(model);
-                                },
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        CargoDeatailsScreen(model),
-                                  ));
-                                },
-                                child: ThirteenlistItemWidget(
+                              return LongPressDraggable(
+                                data: model,
+                                feedback: ThirteenlistItemWidget(
                                   cargoData: model,
                                   onSelectionChanged: (isSelected) {
                                     controller.toggleSelection(model);
                                   },
                                 ),
-                              ),
-                            );
-                          },
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          CargoDeatailsScreen(model),
+                                    ));
+                                  },
+                                  child: ThirteenlistItemWidget(
+                                    cargoData: model,
+                                    onSelectionChanged: (isSelected) {
+                                      controller.toggleSelection(model);
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            )));
+  }
+
+  Widget _body() {
+    if (controller.cropedfile.value != null ||
+        controller.imagePath.value != null) {
+      return _imageCard();
+    } else {
+      return _uploaderCard();
+    }
+  }
+
+  Widget _imageCard() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Card(
+              elevation: 4.0,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: _image(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24.0),
+          _menu(),
+          const SizedBox(height: 24.0),
+        ],
+      ),
+    );
+  }
+
+  Widget _image() {
+    if (controller.cropedfile.value != null) {
+      final path = controller.cropedfile.value!.path;
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 300.h,
+          maxHeight: 300.v,
+        ),
+        child: Image.file(File(path)),
+      );
+    } else if (controller.imagePath.value != null) {
+      final path = controller.imagePath.value!.path;
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 300.h,
+          maxHeight: 300.v,
+        ),
+        child: Image.file(File(path)),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _menu() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FloatingActionButton(
+          onPressed: () {
+            controller.clear();
+          },
+          backgroundColor: Colors.redAccent,
+          tooltip: 'Delete',
+          child: const Icon(Icons.delete),
+        ),
+        if (controller.cropedfile.value == null)
+          Padding(
+            padding: const EdgeInsets.only(left: 32.0),
+            child: FloatingActionButton(
+              onPressed: () async {
+                await controller.cropImage();
+              },
+              backgroundColor: const Color(0xFFBC764A),
+              tooltip: 'Crop',
+              child: const Icon(Icons.crop),
+            ),
+          )
+      ],
+    );
+  }
+
+  Widget _uploaderCard() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.v),
+      child: Center(
+          child: Card(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: SizedBox(
+          width: 320.0,
+          height: 350.0,
+          child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: DottedBorder(
+                      radius: const Radius.circular(12.0),
+                      dashPattern: const [8, 4],
+                      color: Theme.of(context).highlightColor.withOpacity(0.4),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.image,
+                              color: Theme.of(context).highlightColor,
+                              size: 80.0,
+                            ),
+                            const SizedBox(height: 24.0),
+                            Text(
+                              'Upload an image to start',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Theme.of(context).highlightColor),
+                            )
+                          ],
                         ),
                       ),
                     ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 4.h,
+                      ),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.openCamera();
+                            },
+                            child: Container(
+                              height: 60.v,
+                              width: 67.h,
+                              decoration: BoxDecoration(
+                                color: appTheme.blueGray100,
+                                borderRadius: BorderRadius.circular(
+                                  10.h,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Image.asset("assets/images/camara.png"),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 13.v),
+                          Text(
+                            "lbl_camara".tr,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.openGallery();
+                            },
+                            child: Container(
+                              height: 60.v,
+                              width: 69.h,
+                              decoration: BoxDecoration(
+                                color: appTheme.blueGray100,
+                                borderRadius: BorderRadius.circular(
+                                  10.h,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Image.asset("assets/images/gallery.png"),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 14.v),
+                          Text(
+                            "lbl_gallery".tr,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                ))));
+                ),
+                SizedBox(
+                  height: 15.v,
+                )
+              ]),
+        ),
+      )),
+    );
   }
 
   /// Section Widget

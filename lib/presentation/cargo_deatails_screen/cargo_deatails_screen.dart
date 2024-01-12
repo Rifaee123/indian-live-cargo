@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
@@ -68,7 +71,7 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                             Align(
                               alignment: Alignment.topCenter,
                               child: Container(
-                                height: 450.v,
+                                height: 750.v,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 21.h,
                                   vertical: 41.v,
@@ -114,6 +117,7 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                         )),
                                     SizedBox(height: 32.v),
                                     CustomTextFormField(
+                                      autofocus: false,
                                       controller: controller.commentController,
                                       hintText: "lbl_comments".tr,
                                       textInputAction: TextInputAction.done,
@@ -126,118 +130,9 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                       fillColor: appTheme.blueGray100,
                                     ),
                                     SizedBox(height: 26.v),
-                                    CustomElevatedButton(
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          backgroundColor: const Color.fromARGB(
-                                              0, 255, 193, 7),
-                                          context: context,
-                                          builder: (context) => Container(
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff1f4399),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(50),
-                                                    topRight:
-                                                        Radius.circular(50))),
-                                            height: 190.v,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                        left: 4.h,
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          InkWell(
-                                                            onTap: () {
-                                                              controller
-                                                                  .openCamera();
-                                                            },
-                                                            child: Container(
-                                                              height: 60.v,
-                                                              width: 67.h,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: appTheme
-                                                                    .blueGray100,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  10.h,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                              height: 13.v),
-                                                          Text(
-                                                            "lbl_camara".tr,
-                                                            style: CustomTextStyles
-                                                                .titleMediumSemiBold,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.only(),
-                                                      child: Column(
-                                                        children: [
-                                                          InkWell(
-                                                            onTap: () {
-                                                              controller
-                                                                  .openGallery();
-                                                            },
-                                                            child: Container(
-                                                              height: 60.v,
-                                                              width: 69.h,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: appTheme
-                                                                    .blueGray100,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  10.h,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                              height: 14.v),
-                                                          Text(
-                                                            "lbl_gallery".tr,
-                                                            style: CustomTextStyles
-                                                                .titleMediumSemiBold,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      height: 36.v,
-                                      width: 148.h,
-                                      text: "lbl_add_docs".tr,
-                                      buttonStyle:
-                                          CustomButtonStyles.fillBlueGray,
-                                      buttonTextStyle:
-                                          theme.textTheme.bodyLarge!,
-                                    ),
+                                    Obx(() => controller.selectedValue == 3
+                                        ? _body()
+                                        : SizedBox()),
                                     SizedBox(height: 26.v),
                                     CustomElevatedButton(
                                       height: 36.v,
@@ -266,79 +161,6 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                 ),
                               ),
                             ),
-                            // Align(
-                            //   alignment: Alignment.bottomCenter,
-                            //   child: Container(
-                            //     width: double.maxFinite,
-                            //     margin: EdgeInsets.only(top: 313.v),
-                            //     padding: EdgeInsets.symmetric(
-                            //       horizontal: 67.h,
-                            //       vertical: 48.v,
-                            //     ),
-                            //     decoration: BoxDecoration(
-                            //       borderRadius:
-                            //           BorderRadiusStyle.customBorderTL501,
-                            //     ),
-                            // child: Row(
-                            //   mainAxisAlignment:
-                            //       MainAxisAlignment.spaceBetween,
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     Padding(
-                            //       padding: EdgeInsets.only(
-                            //         left: 4.h,
-                            //         bottom: 305.v,
-                            //       ),
-                            //       child: Column(
-                            //         children: [
-                            //           Container(
-                            //             height: 60.v,
-                            //             width: 67.h,
-                            //             decoration: BoxDecoration(
-                            //               color: appTheme.blueGray100,
-                            //               borderRadius:
-                            //                   BorderRadius.circular(
-                            //                 10.h,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           SizedBox(height: 13.v),
-                            //           Text(
-                            //             "lbl_camara".tr,
-                            //             style: CustomTextStyles
-                            //                 .titleMediumSemiBold,
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     Padding(
-                            //       padding: EdgeInsets.only(bottom: 303.v),
-                            //       child: Column(
-                            //         children: [
-                            //           Container(
-                            //             height: 60.v,
-                            //             width: 69.h,
-                            //             decoration: BoxDecoration(
-                            //               color: appTheme.blueGray100,
-                            //               borderRadius:
-                            //                   BorderRadius.circular(
-                            //                 10.h,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           SizedBox(height: 14.v),
-                            //           Text(
-                            //             "lbl_gallery".tr,
-                            //             style: CustomTextStyles
-                            //                 .titleMediumSemiBold,
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -427,5 +249,214 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
         ],
       ),
     );
+  }
+
+  Widget _body() {
+    if (controller.cropedfile.value != null ||
+        controller.imagePath.value != null) {
+      return _imageCard();
+    } else {
+      return _uploaderCard();
+    }
+  }
+
+  Widget _imageCard() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Card(
+              elevation: 4.0,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: _image(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24.0),
+          _menu(),
+        ],
+      ),
+    );
+  }
+
+  Widget _image() {
+    if (controller.cropedfile.value != null) {
+      final path = controller.cropedfile.value!.path;
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 300.h,
+          maxHeight: 300.v,
+        ),
+        child: Image.file(File(path)),
+      );
+    } else if (controller.imagePath.value != null) {
+      final path = controller.imagePath.value!.path;
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 300.h,
+          maxHeight: 300.v,
+        ),
+        child: Image.file(File(path)),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _menu() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FloatingActionButton(
+          onPressed: () {
+            controller.clear();
+          },
+          backgroundColor: Colors.redAccent,
+          tooltip: 'Delete',
+          child: const Icon(Icons.delete),
+        ),
+        if (controller.cropedfile.value == null)
+          Padding(
+            padding: const EdgeInsets.only(left: 32.0),
+            child: FloatingActionButton(
+              onPressed: () async {
+                await controller.cropImage();
+              },
+              backgroundColor: const Color(0xFFBC764A),
+              tooltip: 'Crop',
+              child: const Icon(Icons.crop),
+            ),
+          )
+      ],
+    );
+  }
+
+  Widget _uploaderCard() {
+    return Center(
+        child: Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: SizedBox(
+        width: 320.0,
+        height: 350.0,
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: DottedBorder(
+                    radius: const Radius.circular(12.0),
+                    dashPattern: const [8, 4],
+                    color: Theme.of(context).highlightColor.withOpacity(0.4),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.image,
+                            color: Theme.of(context).highlightColor,
+                            size: 80.0,
+                          ),
+                          const SizedBox(height: 24.0),
+                          Text(
+                            'Upload an image to start',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: Theme.of(context).highlightColor),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 4.h,
+                    ),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            controller.openCamera();
+                          },
+                          child: Container(
+                            height: 60.v,
+                            width: 67.h,
+                            decoration: BoxDecoration(
+                              color: appTheme.blueGray100,
+                              borderRadius: BorderRadius.circular(
+                                10.h,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset("assets/images/camara.png"),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 13.v),
+                        Text(
+                          "lbl_camara".tr,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            controller.openGallery();
+                          },
+                          child: Container(
+                            height: 60.v,
+                            width: 69.h,
+                            decoration: BoxDecoration(
+                              color: appTheme.blueGray100,
+                              borderRadius: BorderRadius.circular(
+                                10.h,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset("assets/images/gallery.png"),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 14.v),
+                        Text(
+                          "lbl_gallery".tr,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.v,
+              )
+            ]),
+      ),
+    ));
   }
 }

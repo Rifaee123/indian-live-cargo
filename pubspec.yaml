@@ -32,12 +32,14 @@ dependencies:
   cached_network_image: null
   connectivity_plus: null
   cupertino_icons: null
+  dotted_border: ^2.1.0
   flutter:
     sdk: flutter
   flutter_secure_storage: ^9.0.0
   flutter_svg: null
   get: null
   http: null
+  image_cropper: 
   image_picker: null
   intl: null
   json_annotation: null
