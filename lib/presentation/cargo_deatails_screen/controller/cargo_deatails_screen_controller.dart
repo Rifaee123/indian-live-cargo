@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/cargo_status_update_api/cargo_status_update_api.dart';
+import 'package:indian_live_cargo_mobileapp/data/apiClient/get_cargos_by_trip_no/get_cargos_by_trip_no.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/controller/all_cargo_screen_controller.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/cargo_deatails_screen/models/cargo_deatails_model.dart';
@@ -15,6 +16,7 @@ class CargoDeatailsScreenController extends GetxController {
   TextEditingController commentController = TextEditingController();
   AllCargoScreenController getcargocontroller =
       Get.put(AllCargoScreenController());
+       final GetcargoController getallcargocontroller = Get.put(GetcargoController());
   UpdateCargoStatusController UpdatecargoStatuscontroller =
       Get.put(UpdateCargoStatusController());
   Rx<XFile?> imagePath = Rx<XFile?>(null);

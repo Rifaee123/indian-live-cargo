@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/cargo_status_update_api/cargo_status_update_api.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/get_cargos_by_trip_no/get_cargos_by_trip_no.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
-
+import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 
 /// A controller class for the AndroidLargeTenScreen.
 ///
@@ -29,19 +29,26 @@ class AllCargoScreenController extends GetxController {
   List<int> cargoIds = [];
   final RxList<CargoData> selectedCargoItems = <CargoData>[].obs;
   Rx<XFile?> imagePath = Rx<XFile?>(null);
+  selectValueClear() {
+   
+    selectedCargoItems.clear();
+    cargoIds.clear();
+  }
 
   void toggleSelection(CargoData cargoData) {
-    if (selectedCargoItems.contains(cargoData) &&
+    if (selectedCargoItems.contains(cargoData) ||
         cargoIds.contains(cargoData.id!)) {
       selectedCargoItems.remove(cargoData);
       cargoIds.remove(cargoData.id!);
     } else {
       selectedCargoItems.add(cargoData);
       cargoIds.add(cargoData.id!);
+      log(cargoData.id.toString());
     }
     log(selectedCargoItems.length.toString());
     log("cargo id:${cargoIds.length.toString()}");
   }
+
   Rx<CroppedFile?> cropedfile = Rx<CroppedFile?>(null);
   Future<void> openCamera() async {
     final picker = ImagePicker();

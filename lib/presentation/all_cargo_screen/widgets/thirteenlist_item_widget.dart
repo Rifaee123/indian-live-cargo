@@ -7,11 +7,15 @@ import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 class ThirteenlistItemWidget extends StatefulWidget {
   final CargoData cargoData;
   final Function(bool isSelected) onSelectionChanged;
+  final Map<int, Color> colorMap;
+  final Map<int, String> statusMap;
 
   ThirteenlistItemWidget({
     required this.cargoData,
     required this.onSelectionChanged,
     Key? key,
+    required this.colorMap,
+    required this.statusMap,
   }) : super(key: key);
 
   @override
@@ -28,7 +32,8 @@ class _ThirteenlistItemWidgetState extends State<ThirteenlistItemWidget> {
         horizontal: 22.0,
         vertical: 17.0,
       ),
-      decoration: AppDecoration.fillBlue.copyWith(
+      decoration: BoxDecoration(
+        color: widget.colorMap[widget.cargoData.status],
         borderRadius: BorderRadiusStyle.roundedBorder10,
       ),
       child: Row(
@@ -55,7 +60,9 @@ class _ThirteenlistItemWidgetState extends State<ThirteenlistItemWidget> {
               bottom: 3.0,
             ),
             child: Text(
-              "Out For Delivery",
+              widget.statusMap[widget.cargoData.status]
+                  .toString()
+                  .toUpperCase(),
               style: theme.textTheme.labelLarge,
             ),
           ),

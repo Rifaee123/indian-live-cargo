@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/controller/all_cargo_screen_controller.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/custom_image_view.dart';
 
@@ -24,12 +27,15 @@ class AppbarLeadingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AllCargoScreenController controller = Get.put(AllCargoScreenController());
     return InkWell(
       onTap: () {
         Get.offNamed(
           AppRoutes.androidLargeNineScreen,
         );
-        ;
+        controller.selectedCargoItems.clear();
+        controller.cargoIds.clear();
+        log(controller.selectedCargoItems.length.toString());
       },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,

@@ -12,7 +12,9 @@ class UpdateCargoStatusController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<void> updateCargoStatus(
-      String authtoken, List<int> cargoIds, int statusId) async {
+      {required String authtoken,
+      required List<int> cargoIds,
+      required int statusId}) async {
     try {
       final authToken =
           await StorageService.instance.readSecureData('AuthToken');

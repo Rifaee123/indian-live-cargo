@@ -5,6 +5,7 @@ import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/all_cargo_screen.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
 import 'package:indian_live_cargo_mobileapp/theme/custom_text_style.dart';
@@ -17,9 +18,10 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
 class CargoDeatailsScreen extends StatefulWidget {
-  CargoDeatailsScreen(this.cargodata, {super.key});
+  CargoDeatailsScreen(this.cargodata, {super.key, this.tripNum});
 
   CargoData cargodata;
+  final int? tripNum;
 
   @override
   State<CargoDeatailsScreen> createState() => _CargoDeatailsScreenState();
@@ -150,9 +152,12 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                       onPressed: () {
                                         controller.UpdatecargoStatuscontroller
                                             .updateCargoStatus(
-                                                "2|AhjfNi38T0hkrw2f7UtDhdbyqBQAkKGhupbyEAoP47e54c1a",
-                                                cargoIds,
-                                                controller.selectedValue.value);
+                                                authtoken: "",
+                                                cargoIds: cargoIds,
+                                                statusId: controller
+                                                    .selectedValue.value);
+                                        controller.getallcargocontroller
+                                            .getCargos('', widget.tripNum!);
                                       },
                                       // buttonTextStyle:
                                       //     theme.textTheme.bodyLarge!,
@@ -190,7 +195,10 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          AllCargoScreenScreen(tripNum: widget.tripNum),
+                    ));
                   },
                   child: CustomImageView(
                     imagePath: ImageConstant.imgRightArrow,

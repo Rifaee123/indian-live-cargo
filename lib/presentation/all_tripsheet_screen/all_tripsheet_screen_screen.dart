@@ -21,6 +21,12 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    Map<int, String> tripStatusMap = {
+      7: 'Trip Created',
+      0: 'On the Way',
+      1: 'Trip Started',
+      2: 'Trip Finished',
+    };
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -28,7 +34,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
             children: [
               _buildIlcDelhi(),
               SizedBox(height: 24.v),
-              _buildAllTripSheet(),
+              _buildAllTripSheet(tripStatusMap),
               SizedBox(height: 5.v),
             ],
           ),
@@ -75,7 +81,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
   }
 
   /// Section Widget
-  Widget _buildAllTripSheet() {
+  Widget _buildAllTripSheet(Map<int, String> tripStatusMap) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.h),
       child: Column(
@@ -103,7 +109,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => AllCargoScreenScreen(
                                   tripNum: controller.tripSheetController
-                                      .tripSheetList[index].tripNumber),
+                                      .tripSheetList[index].id),
                             ));
                             // Get.offNamed(
                             //   AppRoutes.androidLargeTenScreen,
@@ -181,7 +187,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                                                             .tripSheetController
                                                             .tripSheetList[
                                                                 index]
-                                                            .tripNumber
+                                                            .id
                                                             .toString(),
                                                         style: theme.textTheme
                                                             .titleSmall,
@@ -203,7 +209,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                                                       padding: EdgeInsets.only(
                                                           top: 1.v),
                                                       child: Text(
-                                                        "lbl_trip_date".tr,
+                                                        "Vehicle No :",
                                                         style: CustomTextStyles
                                                             .titleSmallBlack900,
                                                       ),
@@ -212,7 +218,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                                                       controller
                                                           .tripSheetController
                                                           .tripSheetList[index]
-                                                          .tripDate
+                                                          .vehicleNumber
                                                           .toString(),
                                                       style: theme
                                                           .textTheme.titleSmall,
@@ -220,43 +226,46 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(height: 3.v),
+                                              SizedBox(height: 6.v),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                      top: 3.v,
-                                                      bottom: 2.v,
-                                                    ),
-                                                    child: Text(
-                                                      "lbl_status".tr,
-                                                      style: CustomTextStyles
-                                                          .titleSmallBlack900,
-                                                    ),
+                                                  Text(
+                                                    "Driver Mobile :",
+                                                    style: CustomTextStyles
+                                                        .titleSmallBlack900,
                                                   ),
-                                                  Container(
-                                                    width: 102.h,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: 8.h,
-                                                      vertical: 1.v,
-                                                    ),
-                                                    decoration: AppDecoration
-                                                        .fillLightBlueA
-                                                        .copyWith(
-                                                      borderRadius:
-                                                          BorderRadiusStyle
-                                                              .roundedBorder5,
-                                                    ),
-                                                    child: Text(
-                                                      "lbl_trip_created".tr,
-                                                      style: theme
-                                                          .textTheme.titleSmall,
-                                                    ),
+                                                  Text(
+                                                    controller
+                                                        .tripSheetController
+                                                        .tripSheetList[index]
+                                                        .vehicleDrivermobilenumber
+                                                        .toString(),
+                                                    style: theme
+                                                        .textTheme.titleSmall,
                                                   ),
+                                                  // Container(
+                                                  //   width: 102.h,
+                                                  //   padding:
+                                                  //       EdgeInsets.symmetric(
+                                                  //     horizontal: 8.h,
+                                                  //     vertical: 1.v,
+                                                  //   ),
+                                                  //   decoration: AppDecoration
+                                                  //       .fillLightBlueA
+                                                  //       .copyWith(
+                                                  //     borderRadius:
+                                                  //         BorderRadiusStyle
+                                                  //             .roundedBorder5,
+                                                  //   ),
+                                                  //   child: Text(
+                                                  //     "lbl_trip_created".tr,
+                                                  //     style: theme
+                                                  //         .textTheme.titleSmall,
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                             ],
@@ -278,15 +287,29 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
                                     borderRadius:
                                         BorderRadiusStyle.customBorderBL10,
                                   ),
-                                  child: Column(
+                                  child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(height: 3.v),
+                                      SizedBox(
+                                        width: 100.h,
+                                        child: Text(
+                                          tripStatusMap[controller
+                                                  .tripSheetController
+                                                  .tripSheetList[index]
+                                                  .status]
+                                              .toString(),
+                                          style: CustomTextStyles
+                                              .titleSmallWhiteA700,
+                                        ),
+                                      ),
                                       Text(
-                                        "lbl_all_cargo".tr,
+                                        controller.tripSheetController
+                                            .tripSheetList[index].tripDate
+                                            .toString(),
                                         style: CustomTextStyles
                                             .titleSmallWhiteA700,
                                       ),
