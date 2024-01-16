@@ -30,7 +30,6 @@ class AllCargoScreenController extends GetxController {
   final RxList<CargoData> selectedCargoItems = <CargoData>[].obs;
   Rx<XFile?> imagePath = Rx<XFile?>(null);
   selectValueClear() {
-   
     selectedCargoItems.clear();
     cargoIds.clear();
   }

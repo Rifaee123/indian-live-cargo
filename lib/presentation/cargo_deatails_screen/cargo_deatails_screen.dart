@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
+import 'package:indian_live_cargo_mobileapp/data/apiClient/update_status_with_image/update_status_with_image_api.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/all_cargo_screen/all_cargo_screen.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
@@ -28,6 +29,8 @@ class CargoDeatailsScreen extends StatefulWidget {
 }
 
 class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
+  UpdateStatusWithImageController updateController =
+      Get.put(UpdateStatusWithImageController());
   CargoDeatailsScreenController controller =
       Get.put(CargoDeatailsScreenController());
   List<int> cargoIds = [];
@@ -149,13 +152,37 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                             MaterialStateProperty.all<Color>(
                                                 appTheme.indigo800),
                                       ),
-                                      onPressed: () {
-                                        controller.UpdatecargoStatuscontroller
-                                            .updateCargoStatus(
-                                                authtoken: "",
-                                                cargoIds: cargoIds,
-                                                statusId: controller
-                                                    .selectedValue.value);
+                                      onPressed: () async {
+                                        if (controller.selectedValue.value !=
+                                            3) {
+                                          controller.UpdatecargoStatuscontroller
+                                              .updateCargoStatus(
+                                                  authtoken: "",
+                                                  cargoIds: cargoIds,
+                                                  statusId: controller
+                                                      .selectedValue.value);
+                                        } else {
+                                          if (controller.cropedfile.value !=
+                                              null) {
+                                            final path = controller
+                                                .cropedfile.value!.path;
+                                            await updateController
+                                                .updateCargoStatusWithAttachment(
+                                                    File(path),
+                                                    controller
+                                                        .selectedValue.value,
+                                                    widget.cargodata.id!);
+                                          } else {
+                                            final path = controller
+                                                .imagePath.value!.path; 
+                                            await updateController
+                                                .updateCargoStatusWithAttachment(
+                                                    File(path),
+                                                    controller
+                                                        .selectedValue.value,
+                                                    widget.cargodata.id!);
+                                          }
+                                        }
                                         controller.getallcargocontroller
                                             .getCargos('', widget.tripNum!);
                                       },

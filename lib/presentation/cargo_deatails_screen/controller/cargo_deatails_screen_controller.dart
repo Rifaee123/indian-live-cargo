@@ -16,7 +16,8 @@ class CargoDeatailsScreenController extends GetxController {
   TextEditingController commentController = TextEditingController();
   AllCargoScreenController getcargocontroller =
       Get.put(AllCargoScreenController());
-       final GetcargoController getallcargocontroller = Get.put(GetcargoController());
+  final GetcargoController getallcargocontroller =
+      Get.put(GetcargoController());
   UpdateCargoStatusController UpdatecargoStatuscontroller =
       Get.put(UpdateCargoStatusController());
   Rx<XFile?> imagePath = Rx<XFile?>(null);
