@@ -33,6 +33,7 @@ class GetcargoController extends GetxController {
         cargoList.assignAll(
           jsonResponse.map((data) => CargoData.fromJson(data)).toList(),
         );
+         
         log(cargoList.length.toString());
       } else {
         throw 'Failed to get trip sheet';

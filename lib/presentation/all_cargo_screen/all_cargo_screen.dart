@@ -66,90 +66,81 @@ class _AllCargoScreenScreenState extends State<AllCargoScreenScreen> {
     return SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(controller.selectedValue.value),
-            body: Padding(
-                padding: EdgeInsets.only(
-                  left: 16.h,
-                  top: 25.v,
-                  right: 16.h,
-                ),
-                child: Column(
-                  children: [
-                    Obx(() => Container(
-                          // width: 380.h,
-                          height: 50.v,
-                          decoration: BoxDecoration(
-                              color: appTheme.blueGray100,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.h))),
-                          child: Center(
-                              child: DropdownButton<int>(
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                            dropdownColor: Colors.white,
-                            focusColor: Colors.black,
-                            value: controller.selectedValue.value,
-                            onChanged: (int? newValue) {
-                              if (newValue != null) {
-                                controller.selectedValue.value = newValue;
-                                log(controller.selectedValue.value.toString());
-                              }
-                            },
-                            items: statusMap.entries.map<DropdownMenuItem<int>>(
-                                (MapEntry<int, String> entry) {
-                              return DropdownMenuItem<int>(
-                                value: entry.key,
-                                child: Text(entry.value),
-                              );
-                            }).toList(),
+            body: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.h,
+                    top: 25.v,
+                    right: 16.h,
+                  ),
+                  child: Column(
+                    children: [
+                      Obx(() => Container(
+                            // width: 380.h,
+                            height: 50.v,
+                            decoration: BoxDecoration(
+                                color: appTheme.blueGray100,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.h))),
+                            child: Center(
+                                child: DropdownButton<int>(
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                              dropdownColor: Colors.white,
+                              focusColor: Colors.black,
+                              value: controller.selectedValue.value,
+                              onChanged: (int? newValue) {
+                                if (newValue != null) {
+                                  controller.selectedValue.value = newValue;
+                                  log(controller.selectedValue.value
+                                      .toString());
+                                }
+                              },
+                              items: statusMap.entries
+                                  .map<DropdownMenuItem<int>>(
+                                      (MapEntry<int, String> entry) {
+                                return DropdownMenuItem<int>(
+                                  value: entry.key,
+                                  child: Text(entry.value),
+                                );
+                              }).toList(),
+                            )),
                           )),
-                        )),
-                    SizedBox(
-                      height: 15.v,
-                    ),
-                    Obx(
-                      () => GestureDetector(
-                        onLongPress: () {
-                          // Show the selection UI (e.g., checkboxes)
-                        },
-                        child: controller.getcargocontroller.isLoading.value
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : ListView.separated(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: 12.0,
-                                  );
-                                },
-                                itemCount: controller
-                                    .getcargocontroller.cargoList.length,
-                                itemBuilder: (context, index) {
-                                  CargoData model = controller
-                                      .getcargocontroller.cargoList[index];
+                      SizedBox(
+                        height: 15.v,
+                      ),
+                      Obx(() =>
+                          controller.selectedValue == 3 ? _body() : SizedBox()),
+                      SizedBox(
+                        height: 15.v,
+                      ),
+                      Obx(
+                        () => GestureDetector(
+                          onLongPress: () {
+                            // Show the selection UI (e.g., checkboxes)
+                          },
+                          child: controller.getcargocontroller.isLoading.value
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ListView.separated(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: 12.0,
+                                    );
+                                  },
+                                  itemCount: controller
+                                      .getcargocontroller.cargoList.length,
+                                  itemBuilder: (context, index) {
+                                    CargoData model = controller
+                                        .getcargocontroller.cargoList[index];
 
-                                  return LongPressDraggable(
-                                    data: model,
-                                    feedback: ThirteenlistItemWidget(
-                                      statusMap: statusMap,
-                                      colorMap: ColorMap,
-                                      cargoData: model,
-                                      onSelectionChanged: (isSelected) {
-                                        controller.toggleSelection(model);
-                                      },
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              CargoDeatailsScreen(model,
-                                                  tripNum: widget.tripNum),
-                                        ));
-                                      },
-                                      child: ThirteenlistItemWidget(
+                                    return LongPressDraggable(
+                                      data: model,
+                                      feedback: ThirteenlistItemWidget(
                                         statusMap: statusMap,
                                         colorMap: ColorMap,
                                         cargoData: model,
@@ -157,14 +148,35 @@ class _AllCargoScreenScreenState extends State<AllCargoScreenScreen> {
                                           controller.toggleSelection(model);
                                         },
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                CargoDeatailsScreen(model,
+                                                    tripNum: widget.tripNum),
+                                          ));
+                                        },
+                                        child: ThirteenlistItemWidget(
+                                          statusMap: statusMap,
+                                          colorMap: ColorMap,
+                                          cargoData: model,
+                                          onSelectionChanged: (isSelected) {
+                                            controller.toggleSelection(model);
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                        ),
                       ),
-                    ),
-                  ],
-                ))));
+                      SizedBox(
+                        height: 25.v,
+                      ),
+                    ],
+                  )),
+            )));
   }
 
   Widget _body() {
@@ -394,14 +406,41 @@ class _AllCargoScreenScreenState extends State<AllCargoScreenScreen> {
             child: Text("Submit"),
             onTap: () async {
               log(controller.selectedValue.value.toString());
-              await controller.updateStatuscontroller
-                  .updateCargoStatus(
-                      authtoken: "",
-                      cargoIds: controller.cargoIds,
-                      statusId: controller.selectedValue.value)
-                  .then((value) => controller.getcargocontroller.getCargos(
-                      "2|AhjfNi38T0hkrw2f7UtDhdbyqBQAkKGhupbyEAoP47e54c1a",
-                      widget.tripNum!));
+              if (controller.selectedValue.value != 3) {
+                await controller.updateStatuscontroller.updateCargoStatus(
+                    authtoken: "",
+                    cargoIds: controller.cargoIds.value,
+                    statusId: controller.selectedValue.value);
+              } else {
+                if (controller.cropedfile.value != null) {
+                  final path = controller.cropedfile.value!.path;
+                  await controller.updateController
+                      .updateCargoStatusWithAttachment(
+                          File(path),
+                          controller.selectedValue.value,
+                          controller.cargoIds.value);
+                } else {
+                  final path = controller.imagePath.value!.path;
+                  await controller.updateController
+                      .updateCargoStatusWithAttachment(
+                          File(path),
+                          controller.selectedValue.value,
+                          controller.cargoIds.value);
+                }
+              }
+              controller.getcargocontroller.getCargos(
+                  "2|AhjfNi38T0hkrw2f7UtDhdbyqBQAkKGhupbyEAoP47e54c1a",
+                  widget.tripNum!);
+              controller.cargoIds.value = '';
+
+              // await controller.updateStatuscontroller
+              //     .updateCargoStatus(
+              //         authtoken: "",
+              //         cargoIds: controller.cargoIds.value,
+              //         statusId: controller.selectedValue.value)
+              //     .then((value) => controller.getcargocontroller.getCargos(
+              //         "2|AhjfNi38T0hkrw2f7UtDhdbyqBQAkKGhupbyEAoP47e54c1a",
+              //         widget.tripNum!));
             },
           ),
         )

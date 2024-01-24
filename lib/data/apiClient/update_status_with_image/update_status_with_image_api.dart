@@ -12,7 +12,7 @@ class UpdateStatusWithImageController extends GetxController {
   UpdateStatusWithImage responseData = UpdateStatusWithImage();
 
   Future<void> updateCargoStatusWithAttachment(
-      File imageFile, int statusId, int cargoId) async {
+      File imageFile, int statusId, String cargoIds) async {
     try {
       isLoading.value = true;
 
@@ -24,7 +24,7 @@ class UpdateStatusWithImageController extends GetxController {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-          'https://api.indianlivecargo.com/api/v1/updateCargoStatusWithAttachment',
+          'https://api.indianlivecargo.com/api/v1/updateCargoStatus',
         ),
       );
 
@@ -32,8 +32,12 @@ class UpdateStatusWithImageController extends GetxController {
       request.headers['Authorization'] = 'Bearer $authToken';
 
       // Add form fields
-      request.fields['cargo_id'] = cargoId.toString();
       request.fields['status_id'] = statusId.toString();
+
+      // Convert the list of cargo IDs to a JSON string
+      final cargoIdsJson = jsonEncode(cargoIds);
+      request.fields['cargo_id'] = cargoIds;
+      log("cargoid:${request.fields}");
 
       // Add the image file
       var imageBytes = await imageFile.readAsBytes();
@@ -51,15 +55,15 @@ class UpdateStatusWithImageController extends GetxController {
         log(response.statusCode.toString());
 
         // Parse the response JSON
-        var jsonResponse =
-            await json.decode(await response.stream.bytesToString());
-        log(jsonResponse.toString());
+        final jsonResponse = await http.Response.fromStream(response);
+        final jsonResponseBody = jsonDecode(jsonResponse.body);
         Get.snackbar('Success', 'Update Successfully',
             backgroundColor: Color.fromARGB(102, 76, 175, 79));
         // Assuming your UpdateStatusWithImage.fromJson() is correctly implemented
+        responseData = UpdateStatusWithImage.fromJson(jsonResponseBody);
 
-       
-        print('Response: ${jsonResponse}');
+        log(responseData.message.toString());
+        print('Response: ${jsonResponse.body}');
 
         // Your success logic here
       } else {

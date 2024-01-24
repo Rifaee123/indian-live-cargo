@@ -8,6 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/cargo_status_update_api/cargo_status_update_api.dart';
 import 'package:indian_live_cargo_mobileapp/data/apiClient/get_cargos_by_trip_no/get_cargos_by_trip_no.dart';
+import 'package:indian_live_cargo_mobileapp/data/apiClient/update_status_with_image/update_status_with_image_api.dart';
 import 'package:indian_live_cargo_mobileapp/data/models/get_cargos_by_trip_no/cargo_data.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 
@@ -22,30 +23,53 @@ class AllCargoScreenController extends GetxController {
       Get.put(UpdateCargoStatusController());
   // CargoDeatailsScreenController updatecontroller =
   //     Get.put(CargoDeatailsScreenController());
+  UpdateStatusWithImageController updateController =
+      Get.put(UpdateStatusWithImageController());
   Rx<int> tripno = 0.obs;
   Rx<int?> tripNo = 0.obs;
   RxInt selectedValue = 0.obs;
   final arguments = Get.arguments;
-  List<int> cargoIds = [];
+  RxString cargoIds = "".obs;
   final RxList<CargoData> selectedCargoItems = <CargoData>[].obs;
   Rx<XFile?> imagePath = Rx<XFile?>(null);
   selectValueClear() {
     selectedCargoItems.clear();
-    cargoIds.clear();
+    cargoIds.value = "";
+  }
+
+  void removeFromCargoIds(int id) {
+    cargoIds.value = cargoIds.value
+        .split(',')
+        .where((cargoId) => cargoId != id.toString())
+        .join(',');
   }
 
   void toggleSelection(CargoData cargoData) {
     if (selectedCargoItems.contains(cargoData) ||
-        cargoIds.contains(cargoData.id!)) {
+        cargoIds.split(',').contains(cargoData.id.toString())) {
       selectedCargoItems.remove(cargoData);
-      cargoIds.remove(cargoData.id!);
+      cargoIds.value = cargoIds
+          .split(',')
+          .where((cargoId) => cargoId != cargoData.id.toString())
+          .join(',');
+      log(cargoIds.value);
     } else {
       selectedCargoItems.add(cargoData);
-      cargoIds.add(cargoData.id!);
+      addToCargoIds(cargoData.id!);
       log(cargoData.id.toString());
+      log(cargoIds.value);
     }
     log(selectedCargoItems.length.toString());
-    log("cargo id:${cargoIds.length.toString()}");
+    log("cargo id:${cargoIds.value}");
+    log(cargoIds.value);
+  }
+
+  void addToCargoIds(int id) {
+    if (cargoIds.value.isEmpty) {
+      cargoIds.value = "$id";
+    } else {
+      cargoIds.value = "$cargoIds,$id";
+    }
   }
 
   Rx<CroppedFile?> cropedfile = Rx<CroppedFile?>(null);

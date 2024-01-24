@@ -21,7 +21,7 @@ class CargoDeatailsScreenController extends GetxController {
   UpdateCargoStatusController UpdatecargoStatuscontroller =
       Get.put(UpdateCargoStatusController());
   Rx<XFile?> imagePath = Rx<XFile?>(null);
-  RxList cargoIds = [].obs;
+  List<int> cargoIds = [];
   Rx<CargoDeatailsScreenModel> androidLargeElevenModelObj =
       CargoDeatailsScreenModel().obs;
   RxInt selectedValue = 0.obs;

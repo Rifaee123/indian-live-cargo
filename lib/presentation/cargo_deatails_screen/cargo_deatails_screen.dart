@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -33,12 +34,23 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
       Get.put(UpdateStatusWithImageController());
   CargoDeatailsScreenController controller =
       Get.put(CargoDeatailsScreenController());
-  List<int> cargoIds = [];
+  String cargoIds = "";
+  void addToCargoIds(int id) {
+    setState(() {
+      if (cargoIds.isEmpty) {
+        cargoIds = "$id";
+      } else {
+        cargoIds = "$cargoIds,$id";
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cargoIds.add(widget.cargodata.id!);
+    addToCargoIds(widget.cargodata.id!);
+    log(cargoIds.toString());
   }
 
   @override
@@ -153,6 +165,7 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                                 appTheme.indigo800),
                                       ),
                                       onPressed: () async {
+                                        log(cargoIds.toString());
                                         if (controller.selectedValue.value !=
                                             3) {
                                           controller.UpdatecargoStatuscontroller
@@ -171,20 +184,25 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                                     File(path),
                                                     controller
                                                         .selectedValue.value,
-                                                    widget.cargodata.id!);
+                                                    widget.cargodata.id!
+                                                        .toString());
                                           } else {
                                             final path = controller
-                                                .imagePath.value!.path; 
+                                                .imagePath.value!.path;
                                             await updateController
                                                 .updateCargoStatusWithAttachment(
                                                     File(path),
                                                     controller
                                                         .selectedValue.value,
-                                                    widget.cargodata.id!);
+                                                    widget.cargodata.id!
+                                                        .toString());
                                           }
                                         }
                                         controller.getallcargocontroller
                                             .getCargos('', widget.tripNum!);
+                                        setState(() {
+                                          cargoIds = '';
+                                        });
                                       },
                                       // buttonTextStyle:
                                       //     theme.textTheme.bodyLarge!,

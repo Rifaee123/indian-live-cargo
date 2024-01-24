@@ -34,7 +34,7 @@ class AppbarLeadingImage extends StatelessWidget {
           AppRoutes.androidLargeNineScreen,
         );
         controller.selectedCargoItems.clear();
-        controller.cargoIds.clear();
+        controller.cargoIds.value = "";
         log(controller.selectedCargoItems.length.toString());
       },
       child: Padding(
