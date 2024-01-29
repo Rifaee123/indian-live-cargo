@@ -19,6 +19,7 @@ import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/app_bar/appbar_leading_image.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/app_bar/appbar_title.dart';
 import 'package:indian_live_cargo_mobileapp/widgets/app_bar/custom_app_bar.dart';
+import 'package:indian_live_cargo_mobileapp/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
 
@@ -107,6 +108,21 @@ class _AllCargoScreenScreenState extends State<AllCargoScreenScreen> {
                               }).toList(),
                             )),
                           )),
+                      SizedBox(
+                        height: 10.v,
+                      ),
+                      CustomTextFormField(
+                        autofocus: false,
+                        controller: controller.commentController,
+                        hintText: "lbl_comments".tr,
+                        textInputAction: TextInputAction.done,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.h,
+                          vertical: 16.v,
+                        ),
+                        borderDecoration: TextFormFieldStyleHelper.fillBlueGray,
+                        fillColor: appTheme.blueGray100,
+                      ),
                       SizedBox(
                         height: 15.v,
                       ),

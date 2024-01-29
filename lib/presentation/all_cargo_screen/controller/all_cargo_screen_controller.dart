@@ -17,6 +17,7 @@ import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 /// This class manages the state of the AndroidLargeTenScreen, including the
 /// current androidLargeTenModelObj
 class AllCargoScreenController extends GetxController {
+  TextEditingController commentController = TextEditingController();
   RxList<CargoData> cargoList = <CargoData>[].obs;
   final GetcargoController getcargocontroller = Get.put(GetcargoController());
   final UpdateCargoStatusController updateStatuscontroller =

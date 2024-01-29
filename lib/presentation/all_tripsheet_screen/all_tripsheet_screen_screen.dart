@@ -64,7 +64,7 @@ class AllTripsheetScreen extends GetWidget<AllTripsheetScreenController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "lbl_ilcdelhi".tr,
+            "Indian Live Cargo",
             style: CustomTextStyles.headlineSmallWhiteA700,
           ),
           IconButton(
