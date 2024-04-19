@@ -77,6 +77,8 @@ class CargoDeatailsScreenController extends GetxController {
     cropedfile.value = null;
   }
 
+ 
+
   @override
   void onClose() {
     super.onClose();

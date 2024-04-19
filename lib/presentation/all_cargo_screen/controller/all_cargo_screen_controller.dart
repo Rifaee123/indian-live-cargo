@@ -33,9 +33,17 @@ class AllCargoScreenController extends GetxController {
   RxString cargoIds = "".obs;
   final RxList<CargoData> selectedCargoItems = <CargoData>[].obs;
   Rx<XFile?> imagePath = Rx<XFile?>(null);
+  RxBool isSimilar = false.obs;
+  RxList<CargoData> cargoSimilarList = <CargoData>[].obs;
+  RxList<CargoData> similarTrackingItems = <CargoData>[].obs;
+  RxSet<CargoData> selectedItems = <CargoData>{}.obs;
+  RxString similarcargoIds = "".obs;
+
   selectValueClear() {
+    selectedItems.clear();
     selectedCargoItems.clear();
     cargoIds.value = "";
+    similarcargoIds.value = '';
   }
 
   void removeFromCargoIds(int id) {
@@ -60,10 +68,12 @@ class AllCargoScreenController extends GetxController {
       log(cargoData.id.toString());
       log(cargoIds.value);
     }
-    log(selectedCargoItems.length.toString());
+
     log("cargo id:${cargoIds.value}");
     log(cargoIds.value);
   }
+
+ 
 
   void addToCargoIds(int id) {
     if (cargoIds.value.isEmpty) {

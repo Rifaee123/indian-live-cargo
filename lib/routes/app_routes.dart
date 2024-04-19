@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/contact_page_screen/binding/contact_page_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/contact_page_screen/contact_page_screen.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/landingpage_screen/binding/landingpage_binding.dart';
+import 'package:indian_live_cargo_mobileapp/presentation/landingpage_screen/landingpage_screen.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/login_screen/login_screen.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/login_screen/binding/login_screen_binding.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/cargo_deatails_screen/cargo_deatails_screen.dart';
@@ -13,6 +17,10 @@ import 'package:indian_live_cargo_mobileapp/presentation/app_navigation_screen/a
 import 'package:indian_live_cargo_mobileapp/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 
 class AppRoutes {
+  static const String landingpageScreen = '/landingpage_screen';
+
+  static const String contactPageScreen = '/contact_page_screen';
+
   static const String androidLargeTwelveScreen = '/android_large_twelve_screen';
 
   static const String androidLargeEightScreen = '/android_large_eight_screen';
@@ -44,9 +52,23 @@ class AppRoutes {
     ),
     GetPage(
       name: androidLargeNineScreen,
-      page: () => const AllTripsheetScreen(),
+      page: () => AllTripsheetScreen(),
       bindings: [
         AllTripsheetScreenBinding(),
+      ],
+    ),
+    GetPage(
+      name: landingpageScreen,
+      page: () => LandingpageScreen(),
+      bindings: [
+        LandingpageBinding(),
+      ],
+    ),
+    GetPage(
+      name: contactPageScreen,
+      page: () => ContactPageScreen(),
+      bindings: [
+        ContactPageBinding(),
       ],
     ),
     // GetPage(

@@ -3,6 +3,18 @@ import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 import 'package:indian_live_cargo_mobileapp/theme/theme_helper.dart';
 
 class AppDecoration {
+   static BoxDecoration get fillGraya => BoxDecoration(
+        color: appTheme.gray600,
+      );
+  static BoxDecoration get fillPurpled => BoxDecoration(
+        color: appTheme.purple50,
+      );
+  static BoxDecoration get fillRedc => BoxDecoration(
+        color: appTheme.red600,
+      );
+  static BoxDecoration get fillWhiteAb => BoxDecoration(
+        color: appTheme.whiteA700,
+      );
   // Fill decorations
   static BoxDecoration get fillBlue => BoxDecoration(
         color: appTheme.blue400,

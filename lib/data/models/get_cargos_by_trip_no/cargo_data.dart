@@ -1,3 +1,4 @@
+import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cargo_data.g.dart';
@@ -31,6 +32,8 @@ class CargoData {
   String? lrNo;
   @JsonKey(name: 'tracking_url')
   String? trackingUrl;
+  @JsonKey(name: 'filename')
+  String? imageUrl;
   String? mobilenumber;
   int? quantity;
   String? weight;
@@ -44,33 +47,35 @@ class CargoData {
   DateTime? createdAt;
   @JsonKey(name: 'updated_at')
   DateTime? updatedAt;
+  RxBool isSelected=false.obs;
 
-  CargoData({
-    this.id,
-    this.goodsId,
-    this.tripNo,
-    this.sortOrder,
-    this.tripSheetId,
-    this.invoiceNumber,
-    this.trackingNo,
-    this.estimateArrivalDate,
-    this.cargoId,
-    this.cargoName,
-    this.place,
-    this.address,
-    this.shipmentName,
-    this.lrNo,
-    this.trackingUrl,
-    this.mobilenumber,
-    this.quantity,
-    this.weight,
-    this.status,
-    this.message,
-    this.branchId,
-    this.currentStatusId,
-    this.createdAt,
-    this.updatedAt,
-  });
+  CargoData(
+      {this.id,
+      this.goodsId,
+      this.tripNo,
+      this.sortOrder,
+      this.tripSheetId,
+      this.invoiceNumber,
+      this.trackingNo,
+      this.estimateArrivalDate,
+      this.cargoId,
+      this.cargoName,
+      this.place,
+      this.address,
+      this.shipmentName,
+      this.lrNo,
+      this.trackingUrl,
+      this.imageUrl,
+      this.mobilenumber,
+      this.quantity,
+      this.weight,
+      this.status,
+      this.message,
+      this.branchId,
+      this.currentStatusId,
+      this.createdAt,
+      this.updatedAt,
+       required this.isSelected});
 
   factory CargoData.fromJson(Map<String, dynamic> json) =>
       _$CargoDataFromJson(json);

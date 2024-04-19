@@ -5,7 +5,7 @@
      android:name="android.permission.WRITE_EXTERNAL_STORAGE"
      android:maxSdkVersion="18" />
     <application
-        android:label="indian_live_cargo_mobileapp"
+        android:label="Indian Live Cargo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         

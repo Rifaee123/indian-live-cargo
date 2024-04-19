@@ -2,6 +2,7 @@ import 'package:indian_live_cargo_mobileapp/core/app_export.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/image_constant.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/size_utils.dart';
 import 'package:indian_live_cargo_mobileapp/core/utils/validation_functions.dart';
+import 'package:indian_live_cargo_mobileapp/data/apiClient/get_all_tripsheet_api/get_all_tripsheet_api.dart';
 import 'package:indian_live_cargo_mobileapp/presentation/login_screen/controller/login_screen_controller.dart';
 import 'package:indian_live_cargo_mobileapp/routes/app_routes.dart';
 import 'package:indian_live_cargo_mobileapp/theme/app_decoration.dart';
@@ -19,6 +20,8 @@ class LoginScreen extends GetWidget<LoginScreenController> {
         );
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TripSheetController tripSheetController =
+      Get.put(TripSheetController());
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +116,10 @@ class LoginScreen extends GetWidget<LoginScreenController> {
                 await controller
                     .login(controller.userNameController.text.trim(),
                         controller.passwordController.text.trim())
-                    .then((value) {
+                    .then((value) async {
                   if (controller.loginController.user.value != null) {
                     Get.offNamed(
-                      AppRoutes.androidLargeNineScreen,
+                      AppRoutes.landingpageScreen,
                     );
                   }
                 }); /////////////////////////////////////////////////////////////////////////////////

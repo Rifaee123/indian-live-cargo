@@ -20,7 +20,9 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
 class CargoDeatailsScreen extends StatefulWidget {
-  CargoDeatailsScreen(this.cargodata, {super.key, this.tripNum});
+  CargoDeatailsScreen(this.cargodata,
+      {super.key, this.tripNum, required this.page});
+  final int page;
 
   CargoData cargodata;
   final int? tripNum;
@@ -45,10 +47,16 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
     });
   }
 
+  void clearimage() {
+    controller.imagePath.value = null;
+    controller.cropedfile.value = null;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    clearimage();
     addToCargoIds(widget.cargodata.id!);
     log(cargoIds.toString());
   }
@@ -147,6 +155,15 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                       fillColor: appTheme.blueGray100,
                                     ),
                                     SizedBox(height: 26.v),
+                                    widget.cargodata.imageUrl != null
+                                        ? Container(
+                                            height: 300.v,
+                                            width: 300.h,
+                                            child: Image.network(
+                                                widget.cargodata.imageUrl!),
+                                          )
+                                        : SizedBox(),
+                                    SizedBox(height: 26.v),
                                     Obx(() => controller.selectedValue == 3
                                         ? _body()
                                         : SizedBox()),
@@ -199,10 +216,13 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
                                           }
                                         }
                                         controller.getallcargocontroller
-                                            .getCargos('', widget.tripNum!);
+                                            .getCargos(
+                                                widget.tripNum!, widget.page);
                                         setState(() {
                                           cargoIds = '';
                                         });
+                                        controller.imagePath.value = null;
+                                        controller.cropedfile.value = null;
                                       },
                                       // buttonTextStyle:
                                       //     theme.textTheme.bodyLarge!,
@@ -240,10 +260,15 @@ class _CargoDeatailsScreenState extends State<CargoDeatailsScreen> {
               children: [
                 InkWell(
                   onTap: () {
+                    controller
+                        .getcargocontroller.getcargocontroller.cargoaddedList
+                        .clear();
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
                           AllCargoScreenScreen(tripNum: widget.tripNum),
                     ));
+                    controller.imagePath.value = null;
+                    controller.cropedfile.value = null;
                   },
                   child: CustomImageView(
                     imagePath: ImageConstant.imgRightArrow,

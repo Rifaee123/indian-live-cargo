@@ -29,7 +29,7 @@ class SplashScreenController extends GetxController {
     if (authToken == true) {
       Future.delayed(const Duration(milliseconds: 3000), () {
         Get.offNamed(
-          AppRoutes.androidLargeNineScreen,
+          AppRoutes.landingpageScreen,
         );
       });
     } else {

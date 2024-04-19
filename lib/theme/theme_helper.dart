@@ -138,10 +138,10 @@ class PrimaryColors {
   Color get blue400 => Color(0XFF3F9CE8);
 
   // BlueGray
-  Color get blueGray100 => Color(0XFFD9D9D9);
+  Color get blueGray100 => Color.fromARGB(255, 237, 236, 236);
 
   // Gray
-  Color get gray600 => Color(0XFF807D7D);
+  Color get gray600 => Color.fromARGB(255, 233, 232, 232);
   Color get gray800 => Color(0XFF4A4A4A);
 
   // Indigo
@@ -151,7 +151,7 @@ class PrimaryColors {
   Color get lightBlueA400 => Color(0XFF00B2FF);
 
   // Purple
-  Color get purple50 => Color(0XFFF1C9FF);
+  Color get purple50 => const Color(0XFFF1C9FF);
 
   // Red
   Color get red600 => Color(0XFFED212A);

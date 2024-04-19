@@ -7,6 +7,7 @@ part of 'cargo_data.dart';
 // **************************************************************************
 
 CargoData _$CargoDataFromJson(Map<String, dynamic> json) => CargoData(
+      isSelected: false.obs,
       id: json['id'] as int?,
       goodsId: json['goods_id'] as int?,
       tripNo: json['trip_no'] as String?,
@@ -22,6 +23,7 @@ CargoData _$CargoDataFromJson(Map<String, dynamic> json) => CargoData(
       shipmentName: json['shipment_name'] as String?,
       lrNo: json['lr_no'] as String?,
       trackingUrl: json['tracking_url'] as String?,
+      imageUrl: json['filename'] as String?,
       mobilenumber: json['mobilenumber'] as String?,
       quantity: json['quantity'] as int?,
       weight: json['weight'] as String?,
@@ -53,6 +55,7 @@ Map<String, dynamic> _$CargoDataToJson(CargoData instance) => <String, dynamic>{
       'shipment_name': instance.shipmentName,
       'lr_no': instance.lrNo,
       'tracking_url': instance.trackingUrl,
+      'filename': instance.imageUrl,
       'mobilenumber': instance.mobilenumber,
       'quantity': instance.quantity,
       'weight': instance.weight,
